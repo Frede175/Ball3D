@@ -19,7 +19,7 @@ public class CapsuleRotate : MonoBehaviour {
 			x_speed = 50;
 		}
 
-		Vector3 rotate = new Vector3(x_speed * Time.deltaTime, y_speed * Time.deltaTime, z_speed * Time.deltaTime);
-		transform.Rotate(rotate);
+		Vector3 rotate = new Vector3(x_speed, y_speed, z_speed);
+		transform.Rotate(rotate * Time.deltaTime);
 	}
 }

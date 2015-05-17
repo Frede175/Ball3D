@@ -9,11 +9,13 @@ public class CameraMovement : MonoBehaviour {
 	void FixedUpdate()
 	{
 		offset = transform.position - player.transform.position;
-
 	}
 
 	// Update is called once per frame
 	void LateUpdate () {
-		transform.position = player.transform.position + offset;
+		if (!GameManager.instance.doingSetUp)
+		{
+			transform.position = player.transform.position + offset;
+		}
 	}
 }

@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
+		if (GameManager.instance.doingSetUp)
+			return;
 		float horizontal = Input.GetAxis("Horizontal") * playerSpeed;
 		float vertical = Input.GetAxis("Vertical") * playerSpeed;
 
