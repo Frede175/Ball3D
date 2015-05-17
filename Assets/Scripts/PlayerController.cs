@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
 	public float normalplayerSpeed = 20F;
-	private int playerSpeedEffectTime;
 	public float playerSpeed;
 	public float timeLeft;
+
 	private bool countDownActive = false;
-
-
+	private int playerSpeedEffectTime;
 	private Rigidbody rb;
 
 	void Awake()
@@ -26,6 +25,8 @@ public class PlayerMovement : MonoBehaviour {
 
 		rb.AddForce(movement);
 
+
+		//check countdown
 		if (countDownActive)
 		{
 			if (timeLeft <= 0)
@@ -38,7 +39,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 	}
-
+	/* -------- Speed Effect! --------*/
 	public void playerEffectSpeed(float speed, float time)
 	{
 		countDownActive = true;

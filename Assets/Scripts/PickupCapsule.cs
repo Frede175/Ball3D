@@ -14,7 +14,7 @@ public class PickupCapsule : MonoBehaviour {
 		if (other.tag == "Player")
 		{
 			Destroy(gameObject);
-			PlayerMovement playerScript = other.GetComponent<PlayerMovement>();
+			PlayerController playerScript = other.GetComponent<PlayerController>();
 			playerScript.playerEffectSpeed(Random.Range(minSpeed, maxSpeed), Random.Range(minTime, maxTime));
 
 		}
