@@ -7,7 +7,8 @@ public class Finish : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
-			Destroy(other);
+			Destroy(other.gameObject);
+			Destroy(gameObject);
 			GameManager.instance.EndLevel();
 		}
 	}

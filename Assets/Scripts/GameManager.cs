@@ -5,9 +5,9 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance;
-	public int numberOfCoinsInLevel;
 	public int numberOfLevels;
 	public bool doingSetUp = false;
+
 
 	float levelWait = 2f;
 	int numberOfCoins = 0;
@@ -15,32 +15,44 @@ public class GameManager : MonoBehaviour {
 	public static int level = 0;
 
 
-	void Awake()
+	void Start()
 	{
 		doingSetUp = true;
 		DontDestroyOnLoad (gameObject);
 		instance = this;
 		InitGame();
 
+
 	}
 
 	void OnLevelWasLoaded(int index)
 	{
+		if (index == 0)
+			Destroy(gameObject);
 		level++;
 		InitGame();
 	}
 
 	void InitGame()
 	{
+		//Setup
 		doingSetUp = true;
-		UIManager.levelText.text = "Level " + level;
-		UIManager.levelScreen.SetActive(true);
-		numberOfCoins = numberOfCoinsInLevel;
+		
+
+		UIScript.instance.levelText.text = "Level " + level;
+		UIScript.instance.levelScreen.SetActive(true);
+		GameObject[] coins;
+		coins = GameObject.FindGameObjectsWithTag("Coin");
+		numberOfCoins = coins.Length;
+		pickedupCoins = 0;
 		UpdateText();
-		UIManager.finish.SetActive(false);
+		UIScript.instance.finish.SetActive(false);
+
+
 		Invoke("HideLevelScreen", levelWait);
 
 	}
+
 
 
 	public void AddCoin()
@@ -51,7 +63,7 @@ public class GameManager : MonoBehaviour {
 			UpdateText();
 			if (pickedupCoins == numberOfCoins)
 			{
-				UIManager.finish.SetActive(true);
+				UIScript.instance.finish.SetActive(true);
 			}
 		}
 		else 
@@ -64,37 +76,46 @@ public class GameManager : MonoBehaviour {
 		if (level == numberOfLevels)
 		{
 			GameWon();
-			enabled = false;
 		}
 		else
 		{
 			int newlevel = level+1;
 			string levelname = "Level" + newlevel;
-			Debug.Log("Laoding level: " + levelname);
+			Debug.Log("Loading level: " + levelname);
 			Application.LoadLevel(levelname);
 		}
 	}
 
 	void HideLevelScreen()
 	{
-		UIManager.levelScreen.SetActive(false);
+		UIScript.instance.levelScreen.SetActive(false);
 		doingSetUp = false;
 	}
 
 	void GameWon()
 	{
-		UIManager.levelText.text = "Game Won";
-		UIManager.levelScreen.SetActive(true);
+		UIScript.instance.levelText.text = "Game Won";
+		UIScript.instance.levelScreen.SetActive(true);
+		StartCoroutine(Wait(2));
+		Application.LoadLevel("MainMenu");
 	}
 
 	void UpdateText()
 	{
-		UIManager.coinText.text = "Coins picked up: " + pickedupCoins;
+		UIScript.instance.coinText.text = "Coins picked up: " + pickedupCoins;
 	}
 
 	public void Restart()
 	{
 		level--;
+		UIScript.instance.EndLevel();
 		Application.LoadLevel(Application.loadedLevel);
+	}
+
+	IEnumerator Wait(float sec)
+	{
+		Debug.Log("Wait start");
+		yield return new WaitForSeconds(sec);
+		Debug.Log("Wait stopped");
 	}
 }
