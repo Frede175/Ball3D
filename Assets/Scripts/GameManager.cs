@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour {
 	{
 		UIScript.instance.levelText.text = "Game Won";
 		UIScript.instance.levelScreen.SetActive(true);
-		StartCoroutine(Wait(2));
+		Invoke("", 2);
 		Application.LoadLevel("MainMenu");
 	}
 
@@ -112,10 +112,4 @@ public class GameManager : MonoBehaviour {
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
-	IEnumerator Wait(float sec)
-	{
-		Debug.Log("Wait start");
-		yield return new WaitForSeconds(sec);
-		Debug.Log("Wait stopped");
-	}
 }
