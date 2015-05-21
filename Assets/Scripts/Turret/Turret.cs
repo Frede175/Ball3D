@@ -12,7 +12,7 @@ public class Turret : MonoBehaviour {
 		Vector3 vT = target.transform.position - transform.position;
 		vT.y = transform.position.y;
 		qTarget = Quaternion.LookRotation(Vector3.up, vT);
-		qTarget *= Quaternion.Euler(0, 0, 90);
+		qTarget *= Quaternion.Euler(0, 0, 180);
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, qTarget, maxTurningRate * Time.deltaTime);
 	}
 }
